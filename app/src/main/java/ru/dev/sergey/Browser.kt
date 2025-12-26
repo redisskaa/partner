@@ -1,8 +1,10 @@
 package ru.dev.sergey
 
+import android.R.attr.description
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -34,11 +36,14 @@ class Browser : AppCompatActivity() {
         val url = intent.getStringExtra("url")
 
         webSettings.javaScriptEnabled = true
-        webSettings.domStorageEnabled = true      // обязательно для Wildberries
-        webSettings.databaseEnabled = true        // иногда тоже нужно
+        webSettings.domStorageEnabled = true
+        webSettings.databaseEnabled = true
         webSettings.cacheMode = WebSettings.LOAD_DEFAULT
+        webSettings.mediaPlaybackRequiresUserGesture = false
+        webSettings.allowContentAccess = true
+        webSettings.allowFileAccess = false
 
-        webSettings.userAgentString = "Mozilla/5.0 (Linux; Android 14; SM-G998B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36"
+        webSettings.userAgentString = resources.getString(R.string.useragent)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -55,37 +60,35 @@ class Browser : AppCompatActivity() {
     }
     fun loadView(url: String, context: Context){
 
-        // ← Ключевой момент: перехватываем все переходы внутри WebView
         webView.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(
                 view: WebView,
                 request: WebResourceRequest
             ): Boolean {
                 view.loadUrl(request.url.toString())
-                return false  // false = грузим внутри приложения
+                return false
             }
 
-            override fun onReceivedError(
-                view: WebView?,
-                request: WebResourceRequest?,
-                error: WebResourceError?
-            ) {
+            override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
+
+            }
+
+            override fun onPageFinished(view: WebView, url: String) {
+
+            }
+
+            override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
                 super.onReceivedError(view, request, error)
 
-                try {
-                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    context.startActivity(intent)
-                } catch (e: Exception) {
-                    finish()
-                    Toast.makeText(context, "Не удалось открыть ссылку: ${e.toString()}", Toast.LENGTH_SHORT).show()
+                when (error?.errorCode) {
+                    -2 -> Toast.makeText(context, "Нет подключения к интернету", Toast.LENGTH_LONG).show()
+                    -6 -> Toast.makeText(context, "Время ожидания истекло", Toast.LENGTH_LONG).show()
+                    else -> Toast.makeText(context, "Ошибка: ${error?.description}", Toast.LENGTH_LONG).show()
                 }
 
-                Toast.makeText(this@Browser, "Не получилось открыть, пробуем другим способом", Toast.LENGTH_LONG).show()
                 Log.e("WebViewError", error?.toString() ?: "Неизвестная ошибка")
             }
         }
-
         webView.loadUrl(url)
     }
 }

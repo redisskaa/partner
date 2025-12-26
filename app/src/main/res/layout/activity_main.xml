@@ -12,13 +12,14 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/transparent"
         android:theme="@style/ThemeOverlay.AppCompat">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/white"
+            android:background="@color/transparent"
             app:titleTextColor="#333232"
             app:navigationIconTint="@color/cyan"
             app:navigationIcon="@android:drawable/btn_star_big_on"

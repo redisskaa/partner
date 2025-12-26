@@ -5,4 +5,5 @@
     <string name="search">Поиск</string>
     <string name="settings">Настройки</string>
     <string name="refresh">Обновить</string>
+    <string name="useragent">Mozilla/5.0 (Linux; Android 14; SM-G998B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36</string>
 </resources>
