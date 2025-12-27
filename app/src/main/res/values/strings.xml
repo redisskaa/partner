@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My App</string>
+    <string name="app_name">Bonus Linker</string>
     <string name="description">-</string>
     <string name="gotolink">Перейти</string>
     <string name="search">Поиск</string>

@@ -7,7 +7,7 @@ object OffersData {
     fun getOffers(): List<Offer> = listOf(
         Offer(
             title = "Binance",
-            description = "Бонус до $600 за регистрацию и первый депозит",
+            description = "Бонус до $600 за регистрацию",
             textButton = textButtonDefault,
             url = "https://www.binance.com/"
         ),
@@ -35,7 +35,5 @@ object OffersData {
             textButton = textButtonDefault,
             url = "https://www.wildberries.ru/"
         )
-        // Добавляй сюда новые офферы сколько угодно
-        // Можно даже сортировать по категориям или добавлять поле category позже
     )
 }

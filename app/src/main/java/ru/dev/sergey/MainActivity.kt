@@ -4,23 +4,15 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.PopupMenu
-import androidx.appcompat.widget.Toolbar
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlin.properties.Delegates
 
-open class MainActivity : AppCompatActivity() {
+open class MainActivity : BaseActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: Adapter
-    private lateinit var toolbar: Toolbar
+    //private lateinit var toolbar: Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,19 +23,21 @@ open class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         // Инициализация Toolbar
-        toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
+        //toolbar = findViewById(R.id.toolbar)
+        //setSupportActionBar(toolbar)
 
         // Настройка заголовка
         supportActionBar?.title = resources.getText(R.string.app_name)
 
-        // Добавляем кнопки в ActionBar
-        toolbar.menu.clear()
-        toolbar.inflateMenu(R.menu.menu_main)
+        setupToolbar()
 
-        toolbar.setNavigationOnClickListener {
-            finish()
-        }
+        // Добавляем кнопки в ActionBar
+        //toolbar.menu.clear()
+        //toolbar.inflateMenu(R.menu.menu_main)
+
+//        toolbar.setNavigationOnClickListener {
+//            finish()
+//        }
 
         // Обработчик нажатий на кнопки
 //        toolbar.setOnMenuItemClickListener { item ->
